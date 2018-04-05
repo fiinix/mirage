@@ -92,6 +92,17 @@
 
         }
 
+
+        .blur-up {
+            filter: blur(5px);
+            transition: filter 400ms;
+        }
+
+        .blur-up.lazyloaded {
+            filter: blur(0);
+        }
+
+
         /*li:nth-child(n+3) {*/
         /*flex: 0 1 25%;*/
         /*}*/
@@ -191,7 +202,7 @@ img with srcset attribute, resolution switching, let's the browser choose
         <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w1664x624.jpg">
         <!--[if IE 9]></video><![endif]-->
         <!-- Fallback -->
-        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload">
+        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload blur-up">
     </picture>
     <figcaption>
         In this scenario the image always the entire width of the
