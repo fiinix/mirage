@@ -1,0 +1,319 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Which image is which?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-size: 100%;
+        }
+
+        body {
+
+            font-size: 1em;
+            line-height: 1.5;
+
+        }
+
+        .lead {
+            font-size: 1.5em;
+            line-height: 1.4;
+        }
+
+        section {
+
+            max-width: 42em;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        picture {
+            display: block;
+        }
+
+        figure {
+            margin: 0;
+            width: 100%;
+        }
+
+        .content-width {
+
+            max-width: 52em;
+            margin-left: auto;
+            margin-right: auto;
+
+        }
+
+        figcaption {
+
+            margin: 1.5em auto 0 auto;
+            max-width: 42em;
+
+        }
+
+        .fukol-grid {
+            list-style: none;
+            padding-left: 0;
+            max-width: 52em;
+        }
+
+        img {
+            display: inline-block;
+            width: 100%;
+            height: auto;
+            vertical-align: middle;
+        }
+
+        .icon {
+
+            width: 2em;
+
+        }
+
+        @media screen and (min-width: 320px) {
+
+            .fukol-grid {
+
+                display: flex; /* 1 */
+                flex-wrap: wrap; /* 2 */
+                margin: -0.5em auto -0.5em auto; /* 5 (edit me!) */
+
+            }
+
+            .fukol-grid > * {
+                flex: 1 0 5em; /* 3 (edit me!) */
+                margin: 0.5em; /* 4 (edit me!) */
+            }
+
+        }
+
+        /*li:nth-child(n+3) {*/
+        /*flex: 0 1 25%;*/
+        /*}*/
+
+        /*li:nth-child(n+3) img {*/
+        /*max-width: 320px;*/
+        /*}*/
+    </style>
+
+</head>
+<body>
+
+
+<section>
+
+    <h1>Responsive images</h1>
+
+    <div class="lead">
+        <p>Performance matters. But so does nice visual imagery. Can&rsquo;t we have both?</p>
+    </div>
+
+    <p>The original image used in all of these examples is 5488&times;3639, JPG, 4.1MB</p>
+
+    <p>Useful for when we need to switch the resolution or the SOMETHING</p>
+
+    <p>If images are flexible widths, <code>picture</code> with <code>srcset
+        width</code> descriptors. For fixed width images we use display density
+        descriptors.</p>
+    <p>the media attribute is for Art Direction.</p>
+
+    full with image content width image single listing multi-column listing
+
+    <h2>Full-width image scenario</h2>
+
+</section>
+
+mobile - 640x480 4:3 320x240 351kb 18kb tablet - 1536x960 8:5 768x480 1.7mb 71kb
+desktop - 2560x960 8:3 1280x480 2.3mb 86kb
+
+PROs and CONs
+
+img with srcset attribute, resolution switching, let's the browser choose
+(suggestive markup) picture with media attribute, we dictate (directive markup)
+
+<figure>
+    <picture>
+        <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg">
+        <source media="(max-width: 768px)" srcset="img/warren-w1536x960.jpg">
+        <source media="(max-width: 1280px)" srcset="img/warren-w2560x960.jpg">
+        <!-- Fallback -->
+        <img src="img/warren-w1536.jpg" alt="Forest">
+    </picture>
+    <figcaption>
+        In this scenario the image always fills the entire width of the
+        viewport. Which means we don't need to use <code>sizes</code> but will
+        need to use <code>srcset</code>. The image is always twice the dimension
+        of the viewport but saved at JPG 40%.
+    </figcaption>
+</figure>
+
+<section>
+
+    <ul>
+        <li> (max-width: 480px) 100vw — If the viewport is 480 pixels wide or
+            smaller, the image will be 100% of the viewport width.
+        </li>
+        <li>(max-width: 900px) 33vw — If the viewport is 480 pixels wide or
+            smaller, this rule will never be reached because of the previous
+            media condition. Ergo, if this rule effectively says that if the
+            viewport is 481 pixels wide to 900px, that the image will be 33% of
+            the viewport width.
+        </li>
+        <li>254px — When there is no media condition listed, the length is
+            assumed to be a default value used when none of the other media
+            conditions are met. In this case, we have media conditions covering
+            viewports up to 900 pixels. Therefore, from 901 pixels wide to
+            infinity, the image will be 254 pixels wide.
+        </li>
+    </ul>
+
+</section>
+
+
+<section>
+    <h2>Content-width images</h2>
+</section>
+
+640x480 4:3 320x240
+1536x864 16:9 768x432
+1664x624 8:3 832x312
+
+<figure class="content-width">
+    <picture>
+        <!--[if IE 9]><video style="display: none;><![endif]-->
+        <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg">
+        <source media="(max-width: 768px)" srcset="img/warren-w1536x864.jpg">
+        <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w1664x624.jpg">
+        <!--[if IE 9]></video><![endif]-->
+        <!-- Fallback -->
+        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload">
+    </picture>
+    <figcaption>
+        In this scenario the image always the entire width of the
+        content. Which means we don't need to use <code>sizes</code> but will
+        need to use <code>srcset</code>. The image is always twice the dimension
+        of the content but saved at JPG 40%.
+    </figcaption>
+</figure>
+
+
+
+
+
+<section>
+    <h2>Multi-column images</h2>
+
+
+    <p>
+        mobile, 640x480 4:3 320x240 (100vw)
+        tablet, 520x390 4:3 260x195 (33vw)
+        desktop, 520x390 4:3 260x195 (20vw)
+    </p>
+</section>
+
+
+<ul class="fukol-grid">
+
+    <li>
+        <article>
+            <figure>
+                <picture>
+                    <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg, 100vw">
+                    <source media="(max-width: 768px)" srcset="img/warren-w520x325.jpg, 33vw">
+                    <source media="(max-width: 1280px)" srcset="img/warren-w520x390.jpg, 20vw">
+                    <img src="img/warren-w640x480.jpg" alt="cat">
+                </picture>
+                <figcaption>
+                    Multi-column images
+                </figcaption>
+            </figure>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <figure>
+                <picture>
+                    <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg, 100vw">
+                    <source media="(max-width: 768px)" srcset="img/warren-w520x325.jpg, 33vw">
+                    <source media="(max-width: 1280px)" srcset="img/warren-w520x390.jpg, 20vw">
+                    <img src="img/warren-w640x480.jpg" alt="cat">
+                </picture>
+                <figcaption>
+                    Multi-column images
+                </figcaption>
+            </figure>
+        </article>
+    </li>
+
+    <li>
+        <article>
+            <figure>
+                <picture>
+                    <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg, 100vw">
+                    <source media="(max-width: 768px)" srcset="img/warren-w520x325.jpg, 33vw">
+                    <source media="(max-width: 1280px)" srcset="img/warren-w520x390.jpg, 20vw">
+                    <img src="img/warren-w640x480.jpg" alt="cat">
+                </picture>
+                <figcaption>
+                    Multi-column images
+                </figcaption>
+            </figure>
+        </article>
+    </li>
+
+</ul>
+
+
+<section>
+    <h2>Iconography</h2>
+
+    <p>The <code>type</code> attribute to the rescue.</p>
+
+    <p>The browser will pick the first source where the declared image type is
+        one that it supports. If it doesn’t recognize any of the source types,
+        it will use the <img> element’s src or srcset declarations.</p>
+
+    <p>https://jakearchibald.github.io/svgomg/</p>
+
+    <figure class="icon">
+        <picture>
+            <source type="image/svg+xml" srcset="img/camera.svg">
+            <img src="img/camera.png" alt="Camera">
+        </picture>
+    </figure>
+
+</section>
+
+
+<section>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius explicabo
+        harum non officia quia vitae voluptates? Culpa delectus doloribus ea
+        eaque neque nesciunt, non quasi, sed sit tempore totam, vel.</p>
+</section>
+
+<!-- <section>
+      <ul>
+<li>(max-width: 480px) 100vw — If the viewport is 480 pixels wide or smaller, the image will be 100% of the viewport width.</li>
+<li>(max-width: 900px) 33vw — If the viewport is 480 pixels wide or smaller, this rule will never be reached because of the previous media condition. Ergo, if this rule effectively says that if the viewport is 481 pixels wide to 900px, that the image will be 33% of the viewport width.</li>
+<li>254px — When there is no media condition listed, the length is assumed to be a default value used when none of the other media conditions are met. In this case, we have media conditions covering viewports up to 900 pixels. Therefore, from 901 pixels wide to infinity, the image will be 254 pixels wide.</li>
+    </ul>
+  </section> -->
+
+
+<!-- <ul>
+<li><img src="img/tree-1-retina-40p.jpeg" alt=""></li>
+<li><img src="img/tree-1-retina.jpeg" alt=""></li>
+<li><img src="img/tree-1-retina-40p.jpeg" alt=""></li>
+<li><img src="img/tree-1-retina.jpeg" alt=""></li>
+</ul> -->
+
+<script src="js/lazysizes.min.js"></script>
+
+</body>
+</html>
