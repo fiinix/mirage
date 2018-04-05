@@ -1,10 +1,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Which image is which?</title>
+    <title>Mirage - A study in performant high resolution images</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+
+        * { margin: 0; }
+        * + * { margin-top: 1em; }
 
         body, html {
             margin: 0;
@@ -14,22 +17,62 @@
 
         body {
 
-            font-size: 1em;
+            font-size: calc( 16px + (20 - 16) * ( (100vw - 320px) / ( 1200 - 320) ));
             line-height: 1.5;
             font-family: 'Georgia', sans-serif;
 
         }
 
-        .lead {
-            font-size: 1.5em;
-            line-height: 1.4;
+        .lead, blockquote {
+            font-size: calc( 18px + (24 - 18) * ( (100vw - 320px) / ( 1200 - 320) ));
+            line-height: 1.2;
+        }
+
+        h1, .alpha { font-size: calc( 25.632px + (81.008 - 25.632) * ( (100vw - 320px) / ( 1200 - 320) )); line-height: 1.05 }
+        h2, .beta { font-size: calc( 22.784px + (54 - 22.784) * ( (100vw - 320px) / ( 1200 - 320) )); line-height: 1.1 }
+        h3, .gamma { font-size: calc( 20.256px + (36 - 20.256) * ( (100vw - 320px) / ( 1200 - 320) )); line-height: 1.15 }
+        h4, .delta { font-size: calc( 18px + (24 - 18) * ( (100vw - 320px) / ( 1200 - 320) )); line-height: 1.2 }
+
+        .main {
+
+            max-width: 75vw;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            justify-content: flex-end;
+
+        }
+
+        nav a {
+            display: block;
+            font-size: calc( 14px + (16 - 14) * ( (100vw - 320px) / ( 1200 - 320) ));
+            margin-top: 0.5em;
+        }
+
+        a[href*="http"]:after {
+            content: " ";
+            display: inline-block;
+            margin-left: 0.125em;
+            width: 0.5em;
+            height: 0.5em;
+            border: 2px solid;
+            border-width: 2px 2px 0 0;
         }
 
         section {
 
-            max-width: 42em;
-            margin-left: auto;
-            margin-right: auto;
+            flex: 1 1 auto;
+            max-width: 49.5vw;
+            margin-left: 1.5em;
+
+        }
+
+        aside {
+
+            position: sticky;
+            top: 3em;
+            flex: 1 1 auto;
+            align-self: flex-start;
 
         }
 
@@ -52,25 +95,36 @@
             filter: blur(0);
         }
 
+        figcaption {
+
+            position: relative;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 75vw;
+            font-size: calc( 14px + (16 - 14) * ( (100vw - 320px) / ( 1200 - 320) ));
+
+        }
+
         .content-width {
 
-            max-width: 52em;
+            max-width: 75vw;
             margin-left: auto;
             margin-right: auto;
 
         }
 
-        figcaption {
+        .content-width figcaption {
 
-            margin: 1.5em auto 0 auto;
-            max-width: 42em;
+            max-width: 49.5vw;
+            margin-right: 0;
 
         }
 
         .fukol-grid {
             list-style: none;
             padding-left: 0;
-            max-width: 52em;
+            width: 100%;
+            max-width: 75vw;
         }
 
         img {
@@ -86,19 +140,27 @@
 
         }
 
-        @media screen and (min-width: 320px) {
+        @media screen and (min-width: 321px) {
 
             .fukol-grid {
 
                 display: flex; /* 1 */
                 flex-wrap: wrap; /* 2 */
-                margin: -0.5em auto -0.5em auto; /* 5 (edit me!) */
+                margin-left: auto; /* 5 (edit me!) */
+                margin-right: auto; /* 5 (edit me!) */
 
             }
 
             .fukol-grid > * {
                 flex: 1 0 5em; /* 3 (edit me!) */
-                margin: 0.5em; /* 4 (edit me!) */
+                margin-top: 0;
+                /*margin-left: 0.5em; !* 4 (edit me!) *!*/
+                /*margin-right: 0.5em; !* 4 (edit me!) *!*/
+            }
+            .fukol-grid > * + * {
+
+                margin-left: 1em;
+
             }
 
         }
@@ -117,27 +179,251 @@
 <body>
 
 
+<div class="main">
+
+    <aside>
+        <h2 class="delta">Table of content</h2>
+        <nav>
+            <a href="#problem">Problem</a>
+            <a href="#challenge">Challenge</a>
+            <a href="#solution">Solution</a>
+            <a href="#tools-and-resources">Tools and resources</a>
+            <p>Scenarios</p>
+            <a href="#fullwidth-images">Full-width images</a>
+            <a href="#contentwidth-images">Content-width images</a>
+            <a href="#multicolumn-images">Multi-column images</a>
+            <a href="#iconography">Iconography with type attributes</a>
+        </nav>
+    </aside>
+
+    <section>
+
+        <h1>Mirage</h1>
+
+        <div class="lead">
+            <p>A study in performant high resolution images for the web. Performance matters. But so does nice visual imagery. Can&rsquo;t we have both?</p>
+        </div>
+
+        <h2 id="problem">Problem</h2>
+
+        <div class="lead">
+            <p>Performance is a fundamental component of the user experience, people are impatient and won&rsquo;t wait for a slow website.</p>
+        </div>
+
+        <p>Whilst the idea of an <a href="https://www.igvita.com/2016/01/12/the-average-page-is-a-myth/">average page is a myth</a>, the reality is that websites are growing larger by the month. High performance should be a requirement of any web project, not an afterthought.</p>
+
+        <p>Poor performance has been tied to a <strong>decrease in revenue, traffic, conversions, and overall user satisfaction</strong>. Case study after case study shows that improving performance, even marginally, will impact the bottom line. The situation is no different on mobile where 71% of people say they expect sites to load as quickly or faster on their phone when compared to the desktop.</p>
+
+        <p>Meanwhile, images account for 60% of most websites who in turn weigh in at 3MB</p>
+
+        <p>The reality is that high performance should be a requirement on any web project, not an afterthought.</p>
+
+        <h2 id="challenge">Challenge</h2>
+
+        <div class="lead">
+            <p>How do you deliver a website that loads fast enough for the visitor?</p>
+        </div>
+
+        <p>The <code>&lt;img&gt;</code> element is great and with the <code>srcset</code> and width attributes we can give the browser options when it comes to delivering high resolution images. The <code>&lt;img&gt;</code> element has limitations though as it&rsquo;s only a suggestion, not a directive. The browser still makes the final decision on which image to present.</p>
+
+        <h2 id="solution">Solution</h2>
+
+        <div class="lead">
+            <p>Use low-quality image placeholders and lazy load the appropriate resolution when the visitors reaches the image. Resize images to twice the dimension they&rsquo;ll be rendered at and compress them at 40%.</p>
+        </div>
+
+        <h3>What&rsquo;s fast enough?</h3>
+
+        <blockquote>
+            <p>Use the 20% rule. The basic idea is that people perceive tasks as faster or slower than other tasks when the difference in time is at least 20% slower or faster.</p>
+        </blockquote>
+
+
+        <h2 id="tools-and-resources">Tools and resources</h2>
+
+        <div class="lead">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aperiam atque blanditiis.</p>
+        </div>
+
+        https://whatdoesmysitecost.com/
+        http://codepen.io/bradfrost/full/EPQVBp/
+        https://jakearchibald.github.io/svgomg/
+
+    </section>
+
+</div>
+
+
+<div class="main">
+    <section>
+
+        <h2>Scenarios</h2>
+
+        <h3 id="fullwidth-images">Full-width images</h3>
+
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et iure praesentium repellat.</p>
+
+    </section>
+</div>
+
+<figure>
+    <picture>
+        <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+        <source media="(max-width: 768px)" srcset="img/warren-w16x10.jpg" data-srcset="img/warren-w1536x960.jpg">
+        <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w2560x960.jpg">
+        <!-- Fallback -->
+        <img src="img/warren-w16x10.jpg" data-src="img/warren-w1536.jpg" alt="Forest" class="lazyload blur-up">
+    </picture>
+    <figcaption>
+        In this scenario the image always fills the entire width of the
+        viewport. Which means we don't need to use <code>sizes</code> but will
+        need to use <code>srcset</code>. The image is always twice the dimension
+        of the viewport but saved at JPG 40%.
+    </figcaption>
+</figure>
+
+<div class="main">
+    <section>
+
+        <h3 id="contentwidth-images">Content-width images</h3>
+
+    </section>
+</div>
+
+<figure class="content-width">
+    <picture>
+        <!--[if IE 9]><video style="display: none;><![endif]-->
+        <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+        <source media="(max-width: 768px)" srcset="img/warren-w16x9.jpg" data-srcset="img/warren-w1536x864.jpg">
+        <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w1664x624.jpg">
+        <!--[if IE 9]></video><![endif]-->
+        <!-- Fallback -->
+        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload blur-up">
+    </picture>
+    <figcaption>
+        In this scenario the image always the entire width of the
+        content. Which means we don't need to use <code>sizes</code> but will
+        need to use <code>srcset</code>. The image is always twice the dimension
+        of the content but saved at JPG 40%.
+    </figcaption>
+</figure>
+
+
+
+
+
+
+<div class="main">
+    <section>
+
+        <h3 id="multicolumn-images">Multi-column images</h3>
+
+        <p>
+            mobile, 640x480 4:3 320x240 (100vw)
+            tablet, 520x390 4:3 260x195 (33vw)
+            desktop, 520x390 4:3 260x195 (20vw)
+        </p>
+
+        </section></div>
+
+        <ul class="fukol-grid">
+
+            <li>
+                <article>
+                    <figure>
+                        <picture>
+                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg, 100vw">
+                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg, 33vw">
+                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg, 20vw">
+                            <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480.jpg" alt="cat" class="lazyload blur-up">
+                        </picture>
+                        <figcaption>
+                            Multi-column images
+                        </figcaption>
+                    </figure>
+                </article>
+            </li>
+
+            <li>
+                <article>
+                    <figure>
+                        <picture>
+                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg, 100vw">
+                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg, 33vw">
+                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg, 20vw">
+                            <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480.jpg" alt="cat" class="lazyload blur-up">
+                        </picture>
+                        <figcaption>
+                            Multi-column images
+                        </figcaption>
+                    </figure>
+                </article>
+            </li>
+
+            <li>
+                <article>
+                    <figure>
+                        <picture>
+                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg, 100vw">
+                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg, 33vw">
+                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg, 20vw">
+                            <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480.jpg" alt="cat" class="lazyload blur-up">
+                        </picture>
+                        <figcaption>
+                            Multi-column images
+                        </figcaption>
+                    </figure>
+                </article>
+            </li>
+
+        </ul>
+
+
+<div class="main">
+    <section>
+
+        <h3 id="iconography">Iconography</h3>
+
+        <p>The <code>type</code> attribute to the rescue.</p>
+
+        <p>The browser will pick the first source where the declared image type is
+            one that it supports. If it doesn’t recognize any of the source types,
+            it will use the <img> element’s src or srcset declarations.</p>
+
+
+        <p>https://jakearchibald.github.io/svgomg/</p>
+
+        <figure class="icon">
+            <picture>
+                <!--[if IE 9]><video style="display: none;><![endif]-->
+                <source type="image/svg+xml" srcset="img/camera.svg">
+                <!--[if IE 9]></video><![endif]-->
+                <img src="img/camera.png" alt="Camera">
+            </picture>
+        </figure>
+
+    </section>
+</div>
+
+
+
+
+
+
+
+
+
 <section>
 
-    <h1>Responsive images</h1>
-
-    <div class="lead">
-        <p>Performance matters. But so does nice visual imagery. Can&rsquo;t we have both?</p>
-    </div>
-
     <p>The original image used in all of these examples is 5488&times;3639, JPG, 4.1MB</p>
+    <p>Ponder by Warren Wong (https://unsplash.com/photos/yIm6-EI2zaE)</p>
 
     <p>Useful for when we need to switch the resolution or the SOMETHING</p>
 
     <p>If images are flexible widths, <code>picture</code> with <code>srcset
-        width</code> descriptors. For fixed width images we use display density
-        descriptors.</p>
+    width</code> descriptors. For fixed width images we use display density
+    descriptors.</p>
     <p>the media attribute is for Art Direction.</p>
-
-    <h2>Table of content</h2>
-    Full-width images
-    Content-width images
-    Multi-column images
 
     full with image content width image single listing multi-column listing
 
@@ -145,6 +431,54 @@
     What if javascript isn't loaded? (noscript) we still want images
     What if image takes a long time (lazyload) we want something to seem to happen anyway (LQIP)
     What if picture element isn't supported? IE? (fallback IMG)
+
+
+    <p>While most versions of IE (even older ones!) are supported well, IE9 has a little conflict to work around. To support IE9, you will need to wrap a video element wrapper around the source elements in your picture tag. You can do this using conditional comments</p>
+
+    <h2>Serving low quality image placeholders as base64</h2>
+
+    <p>$image = &#x27;path-to-your-picture/image.jpg&#x27;;
+    $picture = base64_encode(file_get_contents($image));
+    echo &#x27;&#x3C;img width=&#x22;100&#x22; height=&#x22;100&#x22; src=&#x22;data:image/jpg;base64,&#x27;. $picture .&#x27;&#x22; /&#x3E;&#x27;
+    ?&#x3E;</p>
+
+
+    <h2>Solutions</h2>
+    art direction, aspect ratios
+    save images at much lower compression but double the dimensions
+    images are optimised using jpegoptim and jpgtran using huffman tables
+
+    <h2>Full-width image scenario</h2>
+
+    <p>If images are flexible widths, <code>picture</code> with <code>srcset
+        width</code> descriptors. For fixed width images we use display density
+        descriptors.</p>
+    <p>the media attribute is for Art Direction.</p>
+
+    <aside>
+        <h2>Table of content</h2>
+        Full-width images
+        Content-width images
+        Multi-column images
+        Iconography using type substitution
+    </aside>
+
+    full with image content width image single listing multi-column listing
+
+    <h2>Challenges</h2>
+    What if javascript isn't loaded? (noscript) we still want images
+    What if image takes a long time (lazyload) we want something to seem to happen anyway (LQIP)
+    What if picture element isn't supported? IE? (fallback IMG)
+
+
+    <p>While most versions of IE (even older ones!) are supported well, IE9 has a little conflict to work around. To support IE9, you will need to wrap a video element wrapper around the source elements in your picture tag. You can do this using conditional comments</p>
+
+    <h2>Serving low quality image placeholders as base64</h2>
+
+    <p>$image = &#x27;path-to-your-picture/image.jpg&#x27;;
+        $picture = base64_encode(file_get_contents($image));
+        echo &#x27;&#x3C;img width=&#x22;100&#x22; height=&#x22;100&#x22; src=&#x22;data:image/jpg;base64,&#x27;. $picture .&#x27;&#x22; /&#x3E;&#x27;
+        ?&#x3E;</p>
 
 
     <h2>Solutions</h2>
@@ -171,7 +505,7 @@ img with srcset attribute, resolution switching, let's the browser choose
         <source media="(max-width: 768px)" srcset="img/warren-w16x10.jpg" data-srcset="img/warren-w1536x960.jpg">
         <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w2560x960.jpg">
         <!-- Fallback -->
-        <img src="img/warren-w16x10.jpg" data-src="img/warren-w1536.jpg" alt="Forest" class="">
+        <img src="img/warren-w16x10.jpg" data-src="img/warren-w1536.jpg" alt="Forest" class="lazyload">
     </picture>
     <figcaption>
         In this scenario the image always fills the entire width of the
@@ -180,28 +514,6 @@ img with srcset attribute, resolution switching, let's the browser choose
         of the viewport but saved at JPG 40%.
     </figcaption>
 </figure>
-
-<section>
-
-    <ul>
-        <li> (max-width: 480px) 100vw — If the viewport is 480 pixels wide or
-            smaller, the image will be 100% of the viewport width.
-        </li>
-        <li>(max-width: 900px) 33vw — If the viewport is 480 pixels wide or
-            smaller, this rule will never be reached because of the previous
-            media condition. Ergo, if this rule effectively says that if the
-            viewport is 481 pixels wide to 900px, that the image will be 33% of
-            the viewport width.
-        </li>
-        <li>254px — When there is no media condition listed, the length is
-            assumed to be a default value used when none of the other media
-            conditions are met. In this case, we have media conditions covering
-            viewports up to 900 pixels. Therefore, from 901 pixels wide to
-            infinity, the image will be 254 pixels wide.
-        </li>
-    </ul>
-
-</section>
 
 
 <section>
@@ -220,7 +532,7 @@ img with srcset attribute, resolution switching, let's the browser choose
         <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w1664x624.jpg">
         <!--[if IE 9]></video><![endif]-->
         <!-- Fallback -->
-        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload blur-up">
+        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload">
     </picture>
     <figcaption>
         In this scenario the image always the entire width of the
@@ -318,29 +630,6 @@ img with srcset attribute, resolution switching, let's the browser choose
     </figure>
 
 </section>
-
-
-<section>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius explicabo
-        harum non officia quia vitae voluptates? Culpa delectus doloribus ea
-        eaque neque nesciunt, non quasi, sed sit tempore totam, vel.</p>
-</section>
-
-<!-- <section>
-      <ul>
-<li>(max-width: 480px) 100vw — If the viewport is 480 pixels wide or smaller, the image will be 100% of the viewport width.</li>
-<li>(max-width: 900px) 33vw — If the viewport is 480 pixels wide or smaller, this rule will never be reached because of the previous media condition. Ergo, if this rule effectively says that if the viewport is 481 pixels wide to 900px, that the image will be 33% of the viewport width.</li>
-<li>254px — When there is no media condition listed, the length is assumed to be a default value used when none of the other media conditions are met. In this case, we have media conditions covering viewports up to 900 pixels. Therefore, from 901 pixels wide to infinity, the image will be 254 pixels wide.</li>
-    </ul>
-  </section> -->
-
-
-<!-- <ul>
-<li><img src="img/tree-1-retina-40p.jpeg" alt=""></li>
-<li><img src="img/tree-1-retina.jpeg" alt=""></li>
-<li><img src="img/tree-1-retina-40p.jpeg" alt=""></li>
-<li><img src="img/tree-1-retina.jpeg" alt=""></li>
-</ul> -->
 
 <script src="js/lazysizes.min.js"></script>
 
