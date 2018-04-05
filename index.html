@@ -16,6 +16,7 @@
 
             font-size: 1em;
             line-height: 1.5;
+            font-family: 'Georgia', sans-serif;
 
         }
 
@@ -34,11 +35,21 @@
 
         picture {
             display: block;
+            overflow: hidden;
         }
 
         figure {
             margin: 0;
             width: 100%;
+        }
+
+        .blur-up {
+            filter: blur(12px);
+            transition: filter 400ms;
+        }
+
+        .blur-up.lazyloaded {
+            filter: blur(0);
         }
 
         .content-width {
@@ -93,16 +104,6 @@
         }
 
 
-        .blur-up {
-            filter: blur(5px);
-            transition: filter 400ms;
-        }
-
-        .blur-up.lazyloaded {
-            filter: blur(0);
-        }
-
-
         /*li:nth-child(n+3) {*/
         /*flex: 0 1 25%;*/
         /*}*/
@@ -133,13 +134,30 @@
         descriptors.</p>
     <p>the media attribute is for Art Direction.</p>
 
+    <h2>Table of content</h2>
+    Full-width images
+    Content-width images
+    Multi-column images
+
     full with image content width image single listing multi-column listing
+
+    <h2>Challenges</h2>
+    What if javascript isn't loaded? (noscript) we still want images
+    What if image takes a long time (lazyload) we want something to seem to happen anyway (LQIP)
+    What if picture element isn't supported? IE? (fallback IMG)
+
+
+    <h2>Solutions</h2>
+    art direction, aspect ratios
+    save images at much lower compression but double the dimensions
+    images are optimised using jpegoptim and jpgtran using huffman tables
 
     <h2>Full-width image scenario</h2>
 
 </section>
 
-mobile - 640x480 4:3 320x240 351kb 18kb tablet - 1536x960 8:5 768x480 1.7mb 71kb
+mobile - 640x480 4:3 320x240 351kb 18kb
+tablet - 1536x960 8:5 768x480 1.7mb 71kb
 desktop - 2560x960 8:3 1280x480 2.3mb 86kb
 
 PROs and CONs
@@ -149,11 +167,11 @@ img with srcset attribute, resolution switching, let's the browser choose
 
 <figure>
     <picture>
-        <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg">
-        <source media="(max-width: 768px)" srcset="img/warren-w1536x960.jpg">
-        <source media="(max-width: 1280px)" srcset="img/warren-w2560x960.jpg">
+        <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+        <source media="(max-width: 768px)" srcset="img/warren-w16x10.jpg" data-srcset="img/warren-w1536x960.jpg">
+        <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w2560x960.jpg">
         <!-- Fallback -->
-        <img src="img/warren-w1536.jpg" alt="Forest">
+        <img src="img/warren-w16x10.jpg" data-src="img/warren-w1536.jpg" alt="Forest" class="">
     </picture>
     <figcaption>
         In this scenario the image always fills the entire width of the
@@ -197,8 +215,8 @@ img with srcset attribute, resolution switching, let's the browser choose
 <figure class="content-width">
     <picture>
         <!--[if IE 9]><video style="display: none;><![endif]-->
-        <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg">
-        <source media="(max-width: 768px)" srcset="img/warren-w1536x864.jpg">
+        <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+        <source media="(max-width: 768px)" srcset="img/warren-w16x9.jpg" data-srcset="img/warren-w1536x864.jpg">
         <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w1664x624.jpg">
         <!--[if IE 9]></video><![endif]-->
         <!-- Fallback -->
