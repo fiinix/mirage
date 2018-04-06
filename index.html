@@ -43,6 +43,8 @@
 
         }
 
+        * + .main { margin-top: 3em; }
+
         .first { margin-top: 3em; }
 
         nav a {
@@ -273,6 +275,9 @@
         <p>This means, if a competitors website loads in 5 seconds, our website needs to load in 4 seconds.</p>
 
         <p>In lieu of that, deliver <strong>First Meaningful Paint in less than 1 second</strong>, aim for a <strong>SpeedIndex value under 1250</strong>, make sure the <strong>Time to Interactive (TTI) is less than 5 seconds on slow 3G</strong> and for repeat visits get the <strong>TTI to less than 2 seconds</strong>.</p>
+        
+        <p>Use <a href="https://www.webpagetest.org/">Webpagetest</a> or
+            <a href="https://developers.google.com/web/tools/lighthouse/">Google Lighthouse</a> to test performance.</p>
 
         <p>But with high-resolution devices becoming more common, fast performance is no excuse for visually poor websites, we need to deliver both.</p>
 
@@ -292,23 +297,23 @@
 
         <h3>Base64 encoding LQIPs</h3>
 
-        <p><em>Please note that base64 encoding an image will increase the number of bytes required for the image by 30%.</em></p>
+        <p><em>Base64 encoding an image will increase its file size by 30%.</em></p>
 
-        <p>But accounting for network latency and the overhead (800-900 bytes) of an additional HTTP request still outweighs this, especially when that low-quality image placeholder is 387 bytes (516 bytes as base64).</p>
+        <p>But when accounting for network latency, which is 200ms on 3G networks for every HTTP single request and the overhead (800-900 bytes) of that request, the benefits outweigh the drawbacks.</p>
 
 
 
         <h2 id="tools-and-resources">Tools and resources</h2>
 
-        <div class="lead">
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aperiam atque blanditiis.</p>
-        </div>
+        <p>At the end of the day, our tools are only good as how we use them.</p>
 
-        https://cloudfour.com/thinks/responsive-images-101-definitions/
-        https://imageoptim.com/mac
-        https://whatdoesmysitecost.com/
-        http://codepen.io/bradfrost/full/EPQVBp/
-        https://jakearchibald.github.io/svgomg/
+        <ul>
+            <li><a href="https://cloudfour.com/thinks/responsive-images-101-definitions/">Responsive images 101</a></li>
+            <li><a href="https://imageoptim.com/mac">ImageOptim</a></li>
+            <li><a href="https://whatdoesmysitecost.com/">What does my site cost?</a></li>
+            <li><a href="http://codepen.io/bradfrost/full/EPQVBp/">Performance budget tool</a></li>
+            <li><a href="https://jakearchibald.github.io/svgomg/">SVGOMG!</a></li>
+        </ul>
 
     </section>
 
@@ -316,30 +321,45 @@
 
 
 
+<div class="main">
+    <section>
+
+        <h2>Perceived quality comparison</h2>
+
+        <p>Beauty really is in the eye of the beholder, isn&rsquo;t it?</p>
+
+        <p>Which image do you think is better? Can you tell a difference? If you can, how much of a difference is there?</p>
+
+    </section>
+</div>
+
 
 <figure class="abreasted">
     <picture>
-        <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w1280x960-q40.jpg">
+        <source media="(max-width: 1280px)" srcset="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-srcset="img/warren-w1280x960-q40.jpg">
         <!-- Fallback -->
-        <img src="img/warren-w8x6.jpg" data-src="img/warren-w1280x960-q40.jpg" alt="Forest" class="lazyload blur-up">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-src="img/warren-w1280x960-q40.jpg" alt="Forest" class="lazyload">
     </picture>
     <picture>
-        <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480-q85.jpg">
+        <source media="(max-width: 1280px)" srcset="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-srcset="img/warren-w1280x960-q85.jpg">
         <!-- Fallback -->
-        <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480-q85.jpg" alt="Forest" class="lazyload blur-up">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-src="img/warren-w1280x960-q85.jpg" alt="Forest" class="lazyload">
     </picture>
     <figcaption>
-        In this scenario the image always fills the entire width of the
-        viewport. Which means we don't need to use <code>sizes</code> but will
-        need to use <code>srcset</code>. The image is always twice the dimension
-        of the viewport but saved at JPG 40%.
+        Both images are saved at twice (1280&times;960) the rendered dimensions.
     </figcaption>
 </figure>
 
 
-
 <div class="main">
     <section>
+
+        <p></p>
+
+
+        <p>640x480, 78 KB, 85%
+            1280x960, 174 KB, 85% -> 56 KB 40%</p>
+
 
         <h2>Scenarios</h2>
 
