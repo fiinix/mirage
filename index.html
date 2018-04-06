@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Mirage - A study in performant high resolution images</title>
+    <title>Mirage | A study in visually rich and lightning-fast high resolution images for the web.</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
@@ -43,6 +43,8 @@
 
         }
 
+        .first { margin-top: 3em; }
+
         nav a {
             display: block;
             font-size: calc( 14px + (16 - 14) * ( (100vw - 320px) / ( 1200 - 320) ));
@@ -50,13 +52,11 @@
         }
 
         a[href*="http"]:after {
-            content: " ";
+            content: "\2B08";
             display: inline-block;
             margin-left: 0.125em;
-            width: 0.5em;
-            height: 0.5em;
-            border: 2px solid;
-            border-width: 2px 2px 0 0;
+            position: relative;
+            top: -0.1em;
         }
 
         section {
@@ -64,13 +64,14 @@
             flex: 1 1 auto;
             max-width: 49.5vw;
             margin-left: 1.5em;
+            margin-top: 0;
 
         }
 
         aside {
 
             position: sticky;
-            top: 3em;
+            top: 5.5em;
             flex: 1 1 auto;
             align-self: flex-start;
 
@@ -105,9 +106,21 @@
 
         }
 
+        .abreasted {
+
+            display: flex;
+            flex-flow: row wrap;
+
+        }
+
+        .abreasted picture {
+            width: 50%;
+            margin-top: 0;
+        }
+        .abreasted figcaption { width: 100%; }
+
         .content-width {
 
-            max-width: 75vw;
             margin-left: auto;
             margin-right: auto;
 
@@ -124,7 +137,6 @@
             list-style: none;
             padding-left: 0;
             width: 100%;
-            max-width: 75vw;
         }
 
         img {
@@ -139,6 +151,19 @@
             width: 2em;
 
         }
+
+        table {
+            width: 100%;
+            /*table-layout: fixed;*/
+            font-family: monospace;
+            font-size: calc( 14px + (16 - 14) * ( (100vw - 320px) / ( 1200 - 320) ));
+        }
+        
+        th, td {
+            text-align: right;
+        }
+
+        td { border-top: 1px solid silver;}
 
         @media screen and (min-width: 321px) {
 
@@ -165,6 +190,16 @@
 
         }
 
+        @media screen and (min-width: 769px) {
+
+            .fukol-grid, .content-width, .table-wrapper {
+
+                max-width: 75vw;
+
+            }
+
+        }
+
 
         /*li:nth-child(n+3) {*/
         /*flex: 0 1 25%;*/
@@ -179,7 +214,7 @@
 <body>
 
 
-<div class="main">
+<div class="main first">
 
     <aside>
         <h2 class="delta">Table of content</h2>
@@ -201,8 +236,10 @@
         <h1>Mirage</h1>
 
         <div class="lead">
-            <p>A study in performant high resolution images for the web. Performance matters. But so does nice visual imagery. Can&rsquo;t we have both?</p>
+            <p>A study in visually rich and lightning-fast high resolution images for the web.</p>
         </div>
+
+
 
         <h2 id="problem">Problem</h2>
 
@@ -210,33 +247,55 @@
             <p>Performance is a fundamental component of the user experience, people are impatient and won&rsquo;t wait for a slow website.</p>
         </div>
 
-        <p>Whilst the idea of an <a href="https://www.igvita.com/2016/01/12/the-average-page-is-a-myth/">average page is a myth</a>, the reality is that websites are growing larger by the month. High performance should be a requirement of any web project, not an afterthought.</p>
+        <p>Whilst the idea of an <a href="https://www.igvita.com/2016/01/12/the-average-page-is-a-myth/">average page is a myth</a>, the reality is that websites are
+            <a href="https://httparchive.org/reports/state-of-the-web?start=2017_03_15&end=latest">growing larger by the month</a>. High performance should be a requirement of any web project, not an afterthought.</p>
 
-        <p>Poor performance has been tied to a <strong>decrease in revenue, traffic, conversions, and overall user satisfaction</strong>. Case study after case study shows that improving performance, even marginally, will impact the bottom line. The situation is no different on mobile where 71% of people say they expect sites to load as quickly or faster on their phone when compared to the desktop.</p>
+        <p>Poor performance has been tied to a <a href="http://www.webperformancetoday.com/2010/06/15/everything-you-wanted-to-know-about-web-performance/">decrease in revenue, traffic, conversions, and overall user satisfaction</a>. Case study after case study shows that improving performance, even marginally, will impact the bottom line. The situation is no different on mobile where 71% of people say they expect sites to load as quickly or faster on their phone when compared to the desktop.</p>
 
-        <p>Meanwhile, images account for 60% of most websites who in turn weigh in at 3MB</p>
+        <p><a href="https://www.akamai.com/us/en/about/news/press/2009-press/akamai-reveals-2-seconds-as-the-new-threshold-of-acceptability-for-ecommerce-web-page-response-times.jsp">A study by Akamai</a> show that 40% of people will abandon a website that takes more than 3 seconds to load.</p>
 
-        <p>The reality is that high performance should be a requirement on any web project, not an afterthought.</p>
+        <p>Meanwhile, <a href="https://httparchive.org/reports/state-of-the-web?start=latest#bytesperpage">images account for 60% (1.8MB)</a> of the assets required to display an average page and are often not resized or optimised.</p>
+
 
         <h2 id="challenge">Challenge</h2>
 
         <div class="lead">
-            <p>How do you deliver a website that loads fast enough for the visitor?</p>
+            <p>How do we deliver a visually rich website that loads fast enough for all its visitor?</p>
         </div>
 
-        <p>The <code>&lt;img&gt;</code> element is great and with the <code>srcset</code> and width attributes we can give the browser options when it comes to delivering high resolution images. The <code>&lt;img&gt;</code> element has limitations though as it&rsquo;s only a suggestion, not a directive. The browser still makes the final decision on which image to present.</p>
+        <p>With the <a href="https://www.gsmaintelligence.com/">growing number of devices</a>, browsers, resolutions and networks we need to make sure we can deliver lightning-fast visually rich websites to everyone, from people with Internet Explorer 10 to people using the latest high-resolution smartphone on 3G.</p>
+
+
+        <h3>What&rsquo;s fast enough?</h3>
+
+        <p><a href="https://www.smashingmagazine.com/2015/09/why-performance-matters-the-perception-of-time/#the-need-for-performance-optimization-the-20-rule">Use the 20% rule</a>. People perceive tasks as faster or slower than other tasks when the difference in time is at least 20% slower or faster.</p>
+
+        <p>This means, if a competitors website loads in 5 seconds, our website needs to load in 4 seconds.</p>
+
+        <p>In lieu of that, deliver <strong>First Meaningful Paint in less than 1 second</strong>, aim for a <strong>SpeedIndex value under 1250</strong>, make sure the <strong>Time to Interactive (TTI) is less than 5 seconds on slow 3G</strong> and for repeat visits get the <strong>TTI to less than 2 seconds</strong>.</p>
+
+        <p>But with high-resolution devices becoming more common, fast performance is no excuse for visually poor websites, we need to deliver both.</p>
+
 
         <h2 id="solution">Solution</h2>
 
         <div class="lead">
-            <p>Use low-quality image placeholders and lazy load the appropriate resolution when the visitors reaches the image. Resize images to twice the dimension they&rsquo;ll be rendered at and compress them at 40%.</p>
+            <p>Use optimised low-quality image placeholders (LQIP) and <a href="https://github.com/aFarkas/lazysizes">lazy load</a> the device-contextual resolution when the image reaches the viewport. Resize source images to twice the rendered dimensions and optimise the shit out of them.</p>
         </div>
 
-        <h3>What&rsquo;s fast enough?</h3>
+        <h3>Optimisation</h3>
 
-        <blockquote>
-            <p>Use the 20% rule. The basic idea is that people perceive tasks as faster or slower than other tasks when the difference in time is at least 20% slower or faster.</p>
-        </blockquote>
+        <p>Images are resized using Bilinear resampling and optimised with <a href="https://github.com/tjko/jpegoptim">JPEGOptim</a> and
+            <a href="http://jpegclub.org/jpegtran/">JPEGTran</a> using Huffman code tables with quality set at 40%.</p>
+
+
+
+        <h3>Base64 encoding LQIPs</h3>
+
+        <p><em>Please note that base64 encoding an image will increase the number of bytes required for the image by 30%.</em></p>
+
+        <p>But accounting for network latency and the overhead (800-900 bytes) of an additional HTTP request still outweighs this, especially when that low-quality image placeholder is 387 bytes (516 bytes as base64).</p>
+
 
 
         <h2 id="tools-and-resources">Tools and resources</h2>
@@ -245,6 +304,8 @@
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Animi aperiam atque blanditiis.</p>
         </div>
 
+        https://cloudfour.com/thinks/responsive-images-101-definitions/
+        https://imageoptim.com/mac
         https://whatdoesmysitecost.com/
         http://codepen.io/bradfrost/full/EPQVBp/
         https://jakearchibald.github.io/svgomg/
@@ -252,6 +313,29 @@
     </section>
 
 </div>
+
+
+
+
+<figure class="abreasted">
+    <picture>
+        <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w1280x960-q40.jpg">
+        <!-- Fallback -->
+        <img src="img/warren-w8x6.jpg" data-src="img/warren-w1280x960-q40.jpg" alt="Forest" class="lazyload blur-up">
+    </picture>
+    <picture>
+        <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480-q85.jpg">
+        <!-- Fallback -->
+        <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480-q85.jpg" alt="Forest" class="lazyload blur-up">
+    </picture>
+    <figcaption>
+        In this scenario the image always fills the entire width of the
+        viewport. Which means we don't need to use <code>sizes</code> but will
+        need to use <code>srcset</code>. The image is always twice the dimension
+        of the viewport but saved at JPG 40%.
+    </figcaption>
+</figure>
+
 
 
 <div class="main">
@@ -262,6 +346,10 @@
         <h3 id="fullwidth-images">Full-width images</h3>
 
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et iure praesentium repellat.</p>
+
+        <p>mobile - 640x480 4:3 320x240 351kb 18kb
+            tablet - 1536x960 8:5 768x480 1.7mb 71kb
+            desktop - 2560x960 8:3 1280x480 2.3mb 86kb</p>
 
     </section>
 </div>
@@ -308,6 +396,50 @@
     </figcaption>
 </figure>
 
+<div class="main">
+    <section>
+
+        <div class="table-wrapper">
+            <table>
+
+                <thead>
+                <tr>
+                    <th>Breakpoints</th>
+                    <th>Aspect ratio</th>
+                    <th>LQIP</th>
+                    <th>Image</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>320</td>
+                    <td>4:3</td>
+                    <td>8&times;6 (387 bytes)</td>
+                    <td>640&times;480 (18 KB)</td>
+                </tr>
+                <tr>
+                    <td>768</td>
+                    <td>16:9</td>
+                    <td>16&times;9 (420 bytes)</td>
+                    <td>1536&times;864 (64 KB)</td>
+                </tr>
+                <tr>
+                    <td>1280</td>
+                    <td>8:3</td>
+                    <td>16&times;6 (389 bytes)</td>
+                    <td>1664&times;624 (48 KB)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <p>640x480 4:3 320x240
+            1536x864 16:9 768x432
+            1664x624 8:3 832x312</p>
+
+    </section>
+</div>
+
 
 
 
@@ -332,9 +464,9 @@
                 <article>
                     <figure>
                         <picture>
-                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg, 100vw">
-                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg, 33vw">
-                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg, 20vw">
+                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg">
+                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg">
                             <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480.jpg" alt="cat" class="lazyload blur-up">
                         </picture>
                         <figcaption>
@@ -348,9 +480,9 @@
                 <article>
                     <figure>
                         <picture>
-                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg, 100vw">
-                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg, 33vw">
-                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg, 20vw">
+                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg">
+                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg">
                             <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480.jpg" alt="cat" class="lazyload blur-up">
                         </picture>
                         <figcaption>
@@ -364,9 +496,9 @@
                 <article>
                     <figure>
                         <picture>
-                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg, 100vw">
-                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg, 33vw">
-                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg, 20vw">
+                            <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
+                            <source media="(max-width: 768px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x325.jpg">
+                            <source media="(max-width: 1280px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w520x390.jpg">
                             <img src="img/warren-w8x6.jpg" data-src="img/warren-w640x480.jpg" alt="cat" class="lazyload blur-up">
                         </picture>
                         <figcaption>
@@ -382,7 +514,7 @@
 <div class="main">
     <section>
 
-        <h3 id="iconography">Iconography</h3>
+        <h3 id="iconography">Iconography with type attributes</h3>
 
         <p>The <code>type</code> attribute to the rescue.</p>
 
@@ -455,14 +587,6 @@
         descriptors.</p>
     <p>the media attribute is for Art Direction.</p>
 
-    <aside>
-        <h2>Table of content</h2>
-        Full-width images
-        Content-width images
-        Multi-column images
-        Iconography using type substitution
-    </aside>
-
     full with image content width image single listing multi-column listing
 
     <h2>Challenges</h2>
@@ -515,121 +639,6 @@ img with srcset attribute, resolution switching, let's the browser choose
     </figcaption>
 </figure>
 
-
-<section>
-    <h2>Content-width images</h2>
-</section>
-
-640x480 4:3 320x240
-1536x864 16:9 768x432
-1664x624 8:3 832x312
-
-<figure class="content-width">
-    <picture>
-        <!--[if IE 9]><video style="display: none;><![endif]-->
-        <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
-        <source media="(max-width: 768px)" srcset="img/warren-w16x9.jpg" data-srcset="img/warren-w1536x864.jpg">
-        <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w1664x624.jpg">
-        <!--[if IE 9]></video><![endif]-->
-        <!-- Fallback -->
-        <img src="img/warren-w16x6.jpg" data-src="img/warren-w1536x864.jpg" alt="Forest" class="lazyload">
-    </picture>
-    <figcaption>
-        In this scenario the image always the entire width of the
-        content. Which means we don't need to use <code>sizes</code> but will
-        need to use <code>srcset</code>. The image is always twice the dimension
-        of the content but saved at JPG 40%.
-    </figcaption>
-</figure>
-
-
-
-
-
-<section>
-    <h2>Multi-column images</h2>
-
-
-    <p>
-        mobile, 640x480 4:3 320x240 (100vw)
-        tablet, 520x390 4:3 260x195 (33vw)
-        desktop, 520x390 4:3 260x195 (20vw)
-    </p>
-</section>
-
-
-<ul class="fukol-grid">
-
-    <li>
-        <article>
-            <figure>
-                <picture>
-                    <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg, 100vw">
-                    <source media="(max-width: 768px)" srcset="img/warren-w520x325.jpg, 33vw">
-                    <source media="(max-width: 1280px)" srcset="img/warren-w520x390.jpg, 20vw">
-                    <img src="img/warren-w640x480.jpg" alt="cat">
-                </picture>
-                <figcaption>
-                    Multi-column images
-                </figcaption>
-            </figure>
-        </article>
-    </li>
-
-    <li>
-        <article>
-            <figure>
-                <picture>
-                    <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg, 100vw">
-                    <source media="(max-width: 768px)" srcset="img/warren-w520x325.jpg, 33vw">
-                    <source media="(max-width: 1280px)" srcset="img/warren-w520x390.jpg, 20vw">
-                    <img src="img/warren-w640x480.jpg" alt="cat">
-                </picture>
-                <figcaption>
-                    Multi-column images
-                </figcaption>
-            </figure>
-        </article>
-    </li>
-
-    <li>
-        <article>
-            <figure>
-                <picture>
-                    <source media="(max-width: 320px)" srcset="img/warren-w640x480.jpg, 100vw">
-                    <source media="(max-width: 768px)" srcset="img/warren-w520x325.jpg, 33vw">
-                    <source media="(max-width: 1280px)" srcset="img/warren-w520x390.jpg, 20vw">
-                    <img src="img/warren-w640x480.jpg" alt="cat">
-                </picture>
-                <figcaption>
-                    Multi-column images
-                </figcaption>
-            </figure>
-        </article>
-    </li>
-
-</ul>
-
-
-<section>
-    <h2>Iconography</h2>
-
-    <p>The <code>type</code> attribute to the rescue.</p>
-
-    <p>The browser will pick the first source where the declared image type is
-        one that it supports. If it doesn’t recognize any of the source types,
-        it will use the <img> element’s src or srcset declarations.</p>
-
-    <p>https://jakearchibald.github.io/svgomg/</p>
-
-    <figure class="icon">
-        <picture>
-            <source type="image/svg+xml" srcset="img/camera.svg">
-            <img src="img/camera.png" alt="Camera">
-        </picture>
-    </figure>
-
-</section>
 
 <script src="js/lazysizes.min.js"></script>
 
