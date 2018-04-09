@@ -46,6 +46,7 @@
         * + .main { margin-top: 3em; }
 
         .first { margin-top: 3em; }
+        .last { margin-bottom: 3em; }
 
         nav a {
             display: block;
@@ -154,6 +155,10 @@
 
         }
 
+        pre {
+            white-space: pre-line;
+        }
+
         table {
             width: 100%;
             /*table-layout: fixed;*/
@@ -224,6 +229,7 @@
             <a href="#problem">Problem</a>
             <a href="#challenge">Challenge</a>
             <a href="#solution">Solution</a>
+            <a href="#gotchas">Gotchas</a>
             <a href="#tools-and-resources">Tools and resources</a>
             <p>Scenarios</p>
             <a href="#fullwidth-images">Full-width images</a>
@@ -285,8 +291,10 @@
         <h2 id="solution">Solution</h2>
 
         <div class="lead">
-            <p>Use optimised low-quality image placeholders (LQIP) and <a href="https://github.com/aFarkas/lazysizes">lazy load</a> the device-contextual resolution when the image reaches the viewport. Resize source images to twice the rendered dimensions and optimise the shit out of them.</p>
+            <p>Use resized to image-matching aspect ratio and optimised low-quality image placeholders (LQIP). <a href="https://github.com/aFarkas/lazysizes">Lazy load</a> the device-contextual resolution when the image reaches the viewport. Resize source images to twice the rendered dimensions and optimise the shit out of them.</p>
         </div>
+
+        <p>We&rsquo;re using the <code>picture</code> element because clients may need explicit control over which image is shown at set viewport sizes. Unlike the <code>srcset</code> and <code>sizes</code> attributes in the <code>img</code> element which instead gives the browser a list of image sources that are identical and let&rsquo;s the browser choose the best one.</p>
 
         <h3>Optimisation</h3>
 
@@ -297,9 +305,35 @@
 
         <h3>Base64 encoding LQIPs</h3>
 
-        <p><em>Base64 encoding an image will increase its file size by 30%.</em></p>
+        <p><em><a href="https://www.base64-image.de/">Base64 encoding an image</a> will increase its file size by 30%.</em></p>
 
-        <p>But when accounting for network latency, which is 200ms on 3G networks for every HTTP single request and the overhead (800-900 bytes) of that request, the benefits outweigh the drawbacks.</p>
+        <p>But when accounting for network latency, which is 200ms on 3G networks for every HTTP single request and the overhead (800-900 bytes) of that request, the benefits still outweigh the drawbacks.</p>
+
+        <pre style='color:#000000;background:#ffffff;'><span style='color:#5f5035; background:#ffffe8; '>&lt;?php</span><span style='color:#000000; background:#ffffe8; '></span>
+<span style='color:#797997; background:#ffffe8; '>$img</span><span style='color:#000000; background:#ffffe8; '> </span><span style='color:#808030; background:#ffffe8; '>=</span><span style='color:#000000; background:#ffffe8; '> </span><span style='color:#0000e6; background:#ffffe8; '>'PATH'</span><span style='color:#800080; background:#ffffe8; '>;</span><span style='color:#000000; background:#ffffe8; '></span>
+<span style='color:#797997; background:#ffffe8; '>$picture</span><span style='color:#000000; background:#ffffe8; '> </span><span style='color:#808030; background:#ffffe8; '>=</span><span style='color:#000000; background:#ffffe8; '> </span><span style='color:#400000; background:#ffffe8; '>base64_encode</span><span style='color:#808030; background:#ffffe8; '>(</span><span style='color:#400000; background:#ffffe8; '>file_get_contents</span><span style='color:#808030; background:#ffffe8; '>(</span><span style='color:#797997; background:#ffffe8; '>$imag</span><span style='color:#808030; background:#ffffe8; '>)</span><span style='color:#808030; background:#ffffe8; '>)</span><span style='color:#800080; background:#ffffe8; '>;</span><span style='color:#000000; background:#ffffe8; '></span>
+<span style='color:#800000; background:#ffffe8; font-weight:bold; '>echo</span><span style='color:#000000; background:#ffffe8; '> </span><span style='color:#0000e6; background:#ffffe8; '>'src="data:image/jpg;base64,'</span><span style='color:#808030; background:#ffffe8; '>.</span><span style='color:#000000; background:#ffffe8; '> </span><span style='color:#797997; background:#ffffe8; '>$picture</span><span style='color:#800080; background:#ffffe8; '>;</span><span style='color:#000000; background:#ffffe8; '></span>
+<span style='color:#5f5035; background:#ffffe8; '>?></span>
+</pre>
+
+
+        <h2 id="gotchas">Gotchas</h2>
+
+        <div class="lead">
+            <p>There&rsquo;s always a catch or twelve, and here they are.</p>
+        </div>
+
+        <p>We have to include a <code>img</code> fallback. E.g. IE 11 doesn't recognise the <code>picture</code> element.</p>
+
+        <p>We have to include a <code>noscript</code> fallback for circumstances where JavaScript isn&rsquo;t available.</p>
+
+        <p>To support IE9, we need to wrap a video element wrapper around the source elements in the <code>picture</code> element. You can do this using conditional comments as illustrated in all scenarios.</p>
+
+        <p>Edge versions 13, 14 and 15 intermittently display distorted images as soon as they encounter a <code>srcset</code> attribute, seemingly dependent on caching and network timing.
+            <a href="https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/7778808/">See bug</a>.</p>
+
+        <p>See
+            <a href="https://github.com/ResponsiveImagesCG/picture-element/issues?q=is%3Aopen">a list</a> of other unresolved issues and features within the <code>picture</code> specification.</p>
 
 
 
@@ -308,11 +342,11 @@
         <p>At the end of the day, our tools are only good as how we use them.</p>
 
         <ul>
-            <li><a href="https://cloudfour.com/thinks/responsive-images-101-definitions/">Responsive images 101</a></li>
-            <li><a href="https://imageoptim.com/mac">ImageOptim</a></li>
-            <li><a href="https://whatdoesmysitecost.com/">What does my site cost?</a></li>
-            <li><a href="http://codepen.io/bradfrost/full/EPQVBp/">Performance budget tool</a></li>
-            <li><a href="https://jakearchibald.github.io/svgomg/">SVGOMG!</a></li>
+            <li><a href="https://cloudfour.com/thinks/responsive-images-101-definitions/">Responsive images 101</a> (Jason Grigsby)</li>
+            <li><a href="https://imageoptim.com/mac">ImageOptim</a> (Kornel Lesiński)</li>
+            <li><a href="https://whatdoesmysitecost.com/">What does my site cost?</a> (Tim Kadlec)</li>
+            <li><a href="http://codepen.io/bradfrost/full/EPQVBp/">Performance budget tool</a> (Brad Frost)</li>
+            <li><a href="https://jakearchibald.github.io/svgomg/">SVGOMG!</a> (Jake Archibald)</li>
         </ul>
 
     </section>
@@ -328,6 +362,8 @@
 
         <p>Beauty really is in the eye of the beholder, isn&rsquo;t it?</p>
 
+        <p><small>The original image, <a href="https://unsplash.com/photos/yIm6-EI2zaE">Ponder by Warren Wong</a>, used in all of these scenarios is 5488&times;3639, JPG, 4.1MB</small></p>
+
         <p>Which image do you think is better? Can you tell a difference? If you can, how much of a difference is there?</p>
 
     </section>
@@ -338,12 +374,12 @@
     <picture>
         <source media="(max-width: 1280px)" srcset="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-srcset="img/warren-w1280x960-q40.jpg">
         <!-- Fallback -->
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-src="img/warren-w1280x960-q40.jpg" alt="Forest" class="lazyload">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-src="img/warren-w1280x960-q40.jpg" alt="Man wandering aimlessly in the falling snow." class="lazyload" width="8" height="6">
     </picture>
     <picture>
         <source media="(max-width: 1280px)" srcset="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-srcset="img/warren-w1280x960-q85.jpg">
         <!-- Fallback -->
-        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-src="img/warren-w1280x960-q85.jpg" alt="Forest" class="lazyload">
+        <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEABQUFBQVFBcZGRcfIh4iHy4rJycrLkYyNjI2MkZqQk5CQk5Cal5yXVZdcl6phXZ2hanDpJukw+zT0+z///////8BFBQUFBUUFxkZFx8iHiIfLisnJysuRjI2MjYyRmpCTkJCTkJqXnJdVl1yXqmFdnaFqcOkm6TD7NPT7P/////////CABEIAAYACAMBIgACEQEDEQH/xAAUAAEAAAAAAAAAAAAAAAAAAAAD/9oACAEBAAAAAA//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAECEAAAAD//xAAUAQEAAAAAAAAAAAAAAAAAAAAC/9oACAEDEAAAAF//xAAYEAADAQEAAAAAAAAAAAAAAAABAgQAE//aAAgBAQABPwCeFqzQnUh0Ygb/xAAVEQEBAAAAAAAAAAAAAAAAAAAAAf/aAAgBAgEBPwCP/8QAFREBAQAAAAAAAAAAAAAAAAAAAAH/2gAIAQMBAT8Ar//Z" data-src="img/warren-w1280x960-q85.jpg" alt="Man wandering aimlessly in the falling snow." class="lazyload" width="8" height="6">
     </picture>
     <figcaption>
         Both images are saved at twice (1280&times;960) the rendered dimensions.
@@ -543,7 +579,7 @@
             it will use the <img> element’s src or srcset declarations.</p>
 
 
-        <p>https://jakearchibald.github.io/svgomg/</p>
+        <p>Always optimise your SVGs as well, we&rsquo;re using <a href="https://jakearchibald.github.io/svgomg/">SVGOMG!</a> by Jake Archibald</p>
 
         <figure class="icon">
             <picture>
@@ -558,106 +594,38 @@
 </div>
 
 
+<div class="main last">
+    <section>
+
+        <h3>Let&rsquo;s get to work</h3>
+
+        <div class="lead">
+            <p>This study was brought to you by the good people at
+                <a href="https://www.studio24.net/">Studio 24</a></p>
+        </div>
+
+    </section>
+</div>
 
 
 
 
 
 
+<!--<section>-->
 
-<section>
+    <!--<p>The original image used in all of these examples is 5488&times;3639, JPG, 4.1MB</p>-->
+    <!--<p>Ponder by Warren Wong (https://unsplash.com/photos/yIm6-EI2zaE)</p>-->
 
-    <p>The original image used in all of these examples is 5488&times;3639, JPG, 4.1MB</p>
-    <p>Ponder by Warren Wong (https://unsplash.com/photos/yIm6-EI2zaE)</p>
+    <!--<p>Useful for when we need to switch the resolution or the SOMETHING</p>-->
 
-    <p>Useful for when we need to switch the resolution or the SOMETHING</p>
-
-    <p>If images are flexible widths, <code>picture</code> with <code>srcset
-    width</code> descriptors. For fixed width images we use display density
-    descriptors.</p>
-    <p>the media attribute is for Art Direction.</p>
-
-    full with image content width image single listing multi-column listing
-
-    <h2>Challenges</h2>
-    What if javascript isn't loaded? (noscript) we still want images
-    What if image takes a long time (lazyload) we want something to seem to happen anyway (LQIP)
-    What if picture element isn't supported? IE? (fallback IMG)
+    <!--<p>If images are flexible widths, <code>picture</code> with <code>srcset-->
+    <!--width</code> descriptors. For fixed width images we use display density-->
+    <!--descriptors.</p>-->
+    <!--<p>the media attribute is for Art Direction.</p>-->
 
 
-    <p>While most versions of IE (even older ones!) are supported well, IE9 has a little conflict to work around. To support IE9, you will need to wrap a video element wrapper around the source elements in your picture tag. You can do this using conditional comments</p>
-
-    <h2>Serving low quality image placeholders as base64</h2>
-
-    <p>$image = &#x27;path-to-your-picture/image.jpg&#x27;;
-    $picture = base64_encode(file_get_contents($image));
-    echo &#x27;&#x3C;img width=&#x22;100&#x22; height=&#x22;100&#x22; src=&#x22;data:image/jpg;base64,&#x27;. $picture .&#x27;&#x22; /&#x3E;&#x27;
-    ?&#x3E;</p>
-
-
-    <h2>Solutions</h2>
-    art direction, aspect ratios
-    save images at much lower compression but double the dimensions
-    images are optimised using jpegoptim and jpgtran using huffman tables
-
-    <h2>Full-width image scenario</h2>
-
-    <p>If images are flexible widths, <code>picture</code> with <code>srcset
-        width</code> descriptors. For fixed width images we use display density
-        descriptors.</p>
-    <p>the media attribute is for Art Direction.</p>
-
-    full with image content width image single listing multi-column listing
-
-    <h2>Challenges</h2>
-    What if javascript isn't loaded? (noscript) we still want images
-    What if image takes a long time (lazyload) we want something to seem to happen anyway (LQIP)
-    What if picture element isn't supported? IE? (fallback IMG)
-
-
-    <p>While most versions of IE (even older ones!) are supported well, IE9 has a little conflict to work around. To support IE9, you will need to wrap a video element wrapper around the source elements in your picture tag. You can do this using conditional comments</p>
-
-    <h2>Serving low quality image placeholders as base64</h2>
-
-    <p>$image = &#x27;path-to-your-picture/image.jpg&#x27;;
-        $picture = base64_encode(file_get_contents($image));
-        echo &#x27;&#x3C;img width=&#x22;100&#x22; height=&#x22;100&#x22; src=&#x22;data:image/jpg;base64,&#x27;. $picture .&#x27;&#x22; /&#x3E;&#x27;
-        ?&#x3E;</p>
-
-
-    <h2>Solutions</h2>
-    art direction, aspect ratios
-    save images at much lower compression but double the dimensions
-    images are optimised using jpegoptim and jpgtran using huffman tables
-
-    <h2>Full-width image scenario</h2>
-
-</section>
-
-mobile - 640x480 4:3 320x240 351kb 18kb
-tablet - 1536x960 8:5 768x480 1.7mb 71kb
-desktop - 2560x960 8:3 1280x480 2.3mb 86kb
-
-PROs and CONs
-
-img with srcset attribute, resolution switching, let's the browser choose
-(suggestive markup) picture with media attribute, we dictate (directive markup)
-
-<figure>
-    <picture>
-        <source media="(max-width: 320px)" srcset="img/warren-w8x6.jpg" data-srcset="img/warren-w640x480.jpg">
-        <source media="(max-width: 768px)" srcset="img/warren-w16x10.jpg" data-srcset="img/warren-w1536x960.jpg">
-        <source media="(max-width: 1280px)" srcset="img/warren-w16x6.jpg" data-srcset="img/warren-w2560x960.jpg">
-        <!-- Fallback -->
-        <img src="img/warren-w16x10.jpg" data-src="img/warren-w1536.jpg" alt="Forest" class="lazyload">
-    </picture>
-    <figcaption>
-        In this scenario the image always fills the entire width of the
-        viewport. Which means we don't need to use <code>sizes</code> but will
-        need to use <code>srcset</code>. The image is always twice the dimension
-        of the viewport but saved at JPG 40%.
-    </figcaption>
-</figure>
+<!--</section>-->
 
 
 <script src="js/lazysizes.min.js"></script>
